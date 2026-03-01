@@ -1,0 +1,8 @@
+node_modules/
+out/
+*.vsix
+.DS_Store
+*.log
+webview-ui/node_modules/
+webview-ui/dist/
+webview-ui/.vite/

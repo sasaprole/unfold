@@ -1,0 +1,31 @@
+# Exclude everything, then whitelist what we need
+**/*
+
+# Include extension output
+!out/extension.js
+!media/unfold-icon.png
+!media/unfold-icon.svg
+!package.json
+!README.md
+!CHANGELOG.md
+!LICENSE
+
+# Exclude source and dev files
+src/**
+webview-ui/**
+**/*.ts
+**/*.map
+*.vsix
+.vscode/**
+.vscode-test/**
+.github/**
+.gitignore
+.eslintrc.json
+esbuild.mjs
+tsconfig.json
+TODO.md
+CLAUDE.md
+sample-plan/**
+cocktail-sample-plan/**
+archive/**
+fresh/**

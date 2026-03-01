@@ -1,0 +1,274 @@
+{
+  "name": "unfold",
+  "displayName": "Unfold",
+  "description": "Hierarchical plans as markdown files — AI-generated, git-native, human-readable",
+  "version": "0.1.0",
+  "publisher": "ThatsAThoughOne",
+  "license": "MIT",
+  "icon": "media/unfold-icon.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ThatsAThoughOne/unfold"
+  },
+  "engines": {
+    "vscode": "^1.93.0"
+  },
+  "categories": [
+    "Planning",
+    "Visualization",
+    "Chat"
+  ],
+  "keywords": [
+    "plan",
+    "markdown",
+    "hierarchy",
+    "project planning",
+    "architecture",
+    "ai",
+    "copilot"
+  ],
+  "galleryBanner": {
+    "color": "#1e1e1e",
+    "theme": "dark"
+  },
+  "activationEvents": [
+    "workspaceContains:**/plan.md",
+    "onChatParticipant:unfold.agent"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "chatParticipants": [
+      {
+        "id": "unfold.agent",
+        "fullName": "Unfold Plan Generator",
+        "name": "unfold",
+        "description": "Generate, convert, and refine hierarchical plans",
+        "isSticky": true,
+        "commands": [
+          {
+            "name": "create",
+            "description": "Create a new plan from a description"
+          },
+          {
+            "name": "convert",
+            "description": "Convert an existing plan to Unfold format"
+          },
+          {
+            "name": "refine",
+            "description": "Refine or expand an existing plan"
+          }
+        ]
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "unfold-explorer",
+          "title": "Unfold",
+          "icon": "media/unfold-icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "unfold-explorer": [
+        {
+          "id": "unfoldPlanTree",
+          "name": "Plan"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "unfold.openSection",
+        "title": "Open Section"
+      },
+      {
+        "command": "unfold.refreshTree",
+        "title": "Refresh Plan Tree",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "unfold.collapseAll",
+        "title": "Collapse All",
+        "icon": "$(collapse-all)"
+      },
+      {
+        "command": "unfold.openInEditor",
+        "title": "Open Source File"
+      },
+      {
+        "command": "unfold.showWarnings",
+        "title": "Show Unfold Warnings",
+        "icon": "$(warning)"
+      }
+    ],
+    "configuration": {
+      "title": "Unfold",
+      "properties": {
+        "unfold.guidanceLevel": {
+          "type": "string",
+          "enum": [
+            "precise",
+            "guided",
+            "balanced",
+            "creative"
+          ],
+          "enumDescriptions": [
+            "Literal execution — only what you explicitly ask for. Minimal hierarchy, no embellishment. Best for enterprise/structured work.",
+            "Follows your request closely but suggests things you might have missed (setup, testing, config). Stays focused — won't go on tangents.",
+            "Moderate decomposition with 3-4 levels of detail. The default experience.",
+            "Deep exploration mode — suggests alternatives, edge cases, and considerations you didn't mention. Best for brainstorming."
+          ],
+          "default": "balanced",
+          "description": "Controls how much the plan generator elaborates beyond your request."
+        },
+        "unfold.askBeforeGenerating": {
+          "type": "boolean",
+          "default": true,
+          "description": "Ask clarifying questions before generating or refining a plan."
+        },
+        "unfold.stepDetailLevel": {
+          "type": "string",
+          "enum": [
+            "concise",
+            "standard",
+            "detailed",
+            "comprehensive"
+          ],
+          "enumDescriptions": [
+            "Brief summaries — 1-2 sentences per step. Focus on what and why, not how.",
+            "Standard detail — 2-3 sentences per step with key points covered.",
+            "Detailed steps — 3-5 sentences with specific approaches, considerations, and examples.",
+            "Comprehensive — highly detailed with code snippets, file paths, edge cases, and full implementation guidance."
+          ],
+          "default": "standard",
+          "description": "Controls how much detail each step in the plan contains (independent of overall plan breadth)."
+        }
+      }
+    },
+    "languageModelTools": [
+      {
+        "name": "unfold_getProjectStructure",
+        "displayName": "Get Project Structure",
+        "modelDescription": "List files and directories at a given path in the workspace. Returns a file tree useful for understanding project layout.",
+        "toolReferenceName": "unfold_getProjectStructure",
+        "canBeReferencedInPrompt": false,
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "path": {
+              "type": "string",
+              "description": "Relative path from workspace root. Defaults to root."
+            },
+            "depth": {
+              "type": "number",
+              "description": "Maximum depth to traverse. Defaults to 2."
+            }
+          }
+        }
+      },
+      {
+        "name": "unfold_readFile",
+        "displayName": "Read File",
+        "modelDescription": "Read the contents of a file in the workspace. Useful for examining source code, configuration, or documentation.",
+        "toolReferenceName": "unfold_readFile",
+        "canBeReferencedInPrompt": false,
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "path": {
+              "type": "string",
+              "description": "Relative path from workspace root."
+            },
+            "maxLines": {
+              "type": "number",
+              "description": "Maximum number of lines to return. Defaults to 200."
+            }
+          },
+          "required": ["path"]
+        }
+      },
+      {
+        "name": "unfold_searchCode",
+        "displayName": "Search Code",
+        "modelDescription": "Search for text patterns across workspace files. Returns matching lines with file paths and line numbers.",
+        "toolReferenceName": "unfold_searchCode",
+        "canBeReferencedInPrompt": false,
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "pattern": {
+              "type": "string",
+              "description": "Text pattern to search for (case-insensitive substring match)."
+            },
+            "fileGlob": {
+              "type": "string",
+              "description": "Glob pattern to filter files. Defaults to all files."
+            },
+            "maxResults": {
+              "type": "number",
+              "description": "Maximum number of matching lines to return. Defaults to 20."
+            }
+          },
+          "required": ["pattern"]
+        }
+      },
+      {
+        "name": "unfold_getDependencies",
+        "displayName": "Get Dependencies",
+        "modelDescription": "Extract dependency information from project manifest files (package.json, requirements.txt, Cargo.toml, etc.).",
+        "toolReferenceName": "unfold_getDependencies",
+        "canBeReferencedInPrompt": false,
+        "inputSchema": {
+          "type": "object",
+          "properties": {}
+        }
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "unfold.refreshTree",
+          "when": "view == unfoldPlanTree",
+          "group": "navigation"
+        },
+        {
+          "command": "unfold.collapseAll",
+          "when": "view == unfoldPlanTree",
+          "group": "navigation"
+        },
+        {
+          "command": "unfold.showWarnings",
+          "when": "view == unfoldPlanTree",
+          "group": "navigation"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "node ./esbuild.mjs",
+    "compile:full": "node ./esbuild.mjs && cd webview-ui && npm run build",
+    "watch": "node ./esbuild.mjs --watch",
+    "watch:webview": "cd webview-ui && npm run dev",
+    "pretest": "npm run compile && cd webview-ui && npm run build",
+    "lint": "eslint src --ext ts"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/vscode": "^1.93.0",
+    "@typescript-eslint/eslint-plugin": "^6.19.0",
+    "@typescript-eslint/parser": "^6.19.0",
+    "esbuild": "^0.19.11",
+    "eslint": "^8.56.0",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "gray-matter": "^4.0.3",
+    "zod": "^3.22.4",
+    "markdown-it": "^14.0.0",
+    "highlight.js": "^11.9.0",
+    "fast-glob": "^3.3.2"
+  },
+  "markdown.mermaid.enabled": true
+}
