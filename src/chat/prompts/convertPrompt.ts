@@ -21,5 +21,5 @@ ${getStepDetailInstructions(stepDetailLevel)}
 Input plan:
 ${planText}
 
-Generate the complete plan as a JSON array of PlanFileSpec objects.`;
+Generate the complete plan using the file format above.`;
 }

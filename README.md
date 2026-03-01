@@ -4,6 +4,8 @@
 
 Unfold turns plain markdown files into navigable, multi-level project plans — right inside VS Code. Plans are version-controlled, diffable, and editable by any tool. The `@unfold` chat participant generates plans from natural language using your workspace as context.
 
+[![Demo](media/unfold-demo.gif)](media/unfold-demo.gif)
+
 ## Why Unfold?
 
 Most planning tools lock your plans in a SaaS database. Unfold keeps them where your code lives — in your repo, as markdown.
@@ -50,7 +52,7 @@ A debounced file watcher detects changes to any `.md` file and refreshes the tre
 Search for **Unfold** in the VS Code Extensions Marketplace, or install from a `.vsix`:
 
 ```bash
-code --install-extension unfold-0.0.1.vsix
+code --install-extension unfold-0.2.0.vsix
 ```
 
 ### 2. Create Your First Plan

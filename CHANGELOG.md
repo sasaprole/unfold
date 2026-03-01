@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.2.0
+
+- **Improved plan generation** — Switched from JSON to delimiter-based output format for more reliable LLM parsing
+- **Better prompt engineering** — Refined system and command prompts with clearer examples and requirements
+- **Streamlined types** — Simplified type definitions and removed unnecessary abstractions
+- **Category updates** — Updated marketplace categories for better discoverability
+
 ## 0.1.0 — Initial Release
 
 - Hierarchical plan visualization with sidebar tree view

@@ -2,7 +2,7 @@
   "name": "unfold",
   "displayName": "Unfold",
   "description": "Hierarchical plans as markdown files — AI-generated, git-native, human-readable",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "publisher": "ThatsAThoughOne",
   "license": "MIT",
   "icon": "media/unfold-icon.png",
@@ -14,9 +14,9 @@
     "vscode": "^1.93.0"
   },
   "categories": [
-    "Planning",
     "Visualization",
-    "Chat"
+    "Chat",
+    "Other"
   ],
   "keywords": [
     "plan",

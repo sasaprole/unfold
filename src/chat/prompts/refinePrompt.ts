@@ -23,7 +23,7 @@ ${getGuidanceLevelInstructions(level)}
 ${getStepDetailInstructions(stepDetailLevel)}
 
 ${workspaceSection}
-Generate ONLY the new or modified files as a JSON array of PlanFileSpec objects.
+Generate ONLY the new or modified files using the file format above.
 - For modified files: use the same id and update the content
 - For new files: create new entries with unique IDs and correct parent references
 - Do NOT include unchanged files
