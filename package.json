@@ -8,7 +8,7 @@
   "icon": "media/unfold-icon.png",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ThatsAThoughOne/unfold"
+    "url": "https://github.com/sasaprole/unfold"
   },
   "engines": {
     "vscode": "^1.93.0"
